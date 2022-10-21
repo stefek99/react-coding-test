@@ -4,59 +4,53 @@ import { search } from '../helpers/API';
 import SearchResult from './SearchResult';
 import Spinner from './Spinner';
 
-const StyledCounter = styled.div`
-  background: red;
+const HeaderSearch = styled.div`
+  background: #e3e3e3;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 30px;
 `;
-const Paragraph = styled.p`
-  background: blue;
-`;
-const Button = styled.button`
-  background: yellow;
-`;
+
+const InputSearch = styled.input`
+  background: #c2c2c2;
+  border: 0;
+  padding: 5px;
+  margin-left: auto;
+`
 
 export default class Header extends React.Component {
 
-  state = { count: 0, results: [] };
-
-  increment = () => this.setState({ count: this.state.count + 1 });
-  decrement = () => this.setState({ count: this.state.count - 1 });
-
+  state = { searching : false, results: [] };
 
   handleChange = async (event) => {
-    console.log(event.target.value);
-    let results = (await search(event.target.value)).data.results;
-
-    console.log(results);
-
-    this.setState({results : results });
+    if (event.target.value.trim().length === 0){
+        this.setState({results : [] });
+    } else {
+        this.setState({ searching : true })
+        let results = (await search(event.target.value)).data.results;
+        this.setState({ results : results, searching: false });
+    }
 
     console.log(this.state.results);
-    console.log(typeof this.state.results.map);
   }
 
   render() {
     return (
-      <StyledCounter>
-        <Paragraph>{this.state.count}</Paragraph>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
+      <HeaderSearch>
 
-
-        <input onChange={this.handleChange}></input>
-
-
+        <InputSearch onChange={this.handleChange} placeholder="Quick search..."></InputSearch>
 
         {this.state.results && this.state.results.map(item =>
             <span>
                 <SearchResult item={item} key={item.name}></SearchResult>
-                {/* <div>{item.name}</div> */}
             </span>
         )}
 
-        <Spinner />
+        { this.state.searching ? <Spinner /> : null }
 
 
-      </StyledCounter>
+      </HeaderSearch>
     );
   }
 }
