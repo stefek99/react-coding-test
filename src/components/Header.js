@@ -25,7 +25,7 @@ const SearchResults = styled.div`
   position: absolute;
   width: 400px;
   max-width: 100%;
-  top: 36px;
+  top: 40px;
   right: 0;
   height: calc(100vh - 36px);
   overflow: scroll;
