@@ -9,14 +9,25 @@ const HeaderSearch = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 30px;
+  height: 36px;
 `;
 
 const InputSearch = styled.input`
   background: #c2c2c2;
   border: 0;
   padding: 5px;
-  margin-left: auto;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+`
+
+const SearchResults = styled.div`
+  position: absolute;
+  width: 400px;
+  top: 36px;
+  right: 0;
+  height: calc(100vh - 36px);
+  overflow: scroll;
 `
 
 export default class Header extends React.Component {
@@ -41,14 +52,15 @@ export default class Header extends React.Component {
 
         <InputSearch onChange={this.handleChange} placeholder="Quick search..."></InputSearch>
 
-        {this.state.results && this.state.results.map(item =>
-            <span>
-                <SearchResult item={item} key={item.name}></SearchResult>
-            </span>
-        )}
+        <SearchResults>
+          {this.state.results && this.state.results.map(item =>
+              <span>
+                  <SearchResult item={item} key={item.name}></SearchResult>
+              </span>
+          )}
 
-        { this.state.searching ? <Spinner /> : null }
-
+          { this.state.searching ? <Spinner /> : null }
+        </SearchResults>
 
       </HeaderSearch>
     );

@@ -7,6 +7,9 @@ const Result = styled.div`
 
 const Description = styled.div`
   font-size: 12px;
+  height: 30px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
 `
 
 export default class SearchResult extends React.Component {
@@ -16,7 +19,7 @@ export default class SearchResult extends React.Component {
   render() {
     return (
       <Result>
-        <img src="https://via.placeholder.com/100"></img>
+        <img src="https://via.placeholder.com/80"></img>
         <a href={this.baseURL + this.props.item.name}>{this.props.item.name}</a>
         <Description>Lorem Ipsum. Description. JSON stringify... {JSON.stringify(this.props.item)}</Description>
       </Result>
