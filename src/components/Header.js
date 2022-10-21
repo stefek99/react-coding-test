@@ -24,17 +24,25 @@ const InputSearch = styled.input`
 const SearchResults = styled.div`
   position: absolute;
   width: 400px;
+  max-width: 100%;
   top: 36px;
   right: 0;
   height: calc(100vh - 36px);
   overflow: scroll;
 `
 
+const SearchResultsEmpty = styled(SearchResults)`
+  margin-right: 5px;
+  text-align: right;
+`;
+
 export default class Header extends React.Component {
 
-  state = { searching : false, results: [] };
+  state = { searching : false, results: [], query: "" };
 
   handleChange = async (event) => {
+    this.setState({ query : event.target.value.trim() });
+
     if (event.target.value.trim().length === 0){
         this.setState({results : [] });
     } else {
@@ -61,6 +69,14 @@ export default class Header extends React.Component {
 
           { this.state.searching ? <Spinner /> : null }
         </SearchResults>
+
+
+        { this.state.results.length === 0 && this.state.query.length > 0 && this.state.searching === false ?
+          <SearchResultsEmpty>
+            No matching results for the query {this.state.query}
+          </SearchResultsEmpty>
+          : null
+        }
 
       </HeaderSearch>
     );
