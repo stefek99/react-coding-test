@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { search } from '../helpers/API';
+import SearchResult from './SearchResult';
+import Spinner from './Spinner';
 
 const StyledCounter = styled.div`
   background: red;
@@ -45,8 +47,13 @@ export default class Header extends React.Component {
 
 
         {this.state.results && this.state.results.map(item =>
-            <div>{item.name}</div>
+            <span>
+                <SearchResult item={item} key={item.name}></SearchResult>
+                {/* <div>{item.name}</div> */}
+            </span>
         )}
+
+        <Spinner />
 
 
       </StyledCounter>
